@@ -105,11 +105,6 @@ searchInput.addEventListener("keyup", () => {
   }
 });
 
-playSound.addEventListener("click", () => {
-  alert("helo");
-  pronounce.play();
-});
-
 window.addEventListener("DOMContentLoaded", async () => {
   content.innerHTML = `          <div class="error-in">
             <h1>😕</h1>
@@ -186,10 +181,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   let meanings = await data[0].meanings;
   let meaningpart = await meanings[0];
   let { partOfSpeech, definitions, synonyms } = meaningpart;
-  let audio = await phonetics[0].audio;
+  let audio = phonetics[0].audio;
   console.log(audio);
-  let isverb = await data[0].meanings[1].partOfSpeech;
-  let defi = await data[0].meanings[1].definitions;
+  let isverb = data[0].meanings[1].partOfSpeech;
+  let defi =  data[0].meanings[1].definitions;
 
   searchInput.value = word;
   content.innerHTML = `          <div class="dict-head">
@@ -213,7 +208,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             </div>
           </div>
           <div class="word-type">
-            <h3 class="wtype">noun</h3>
+            <h3 class="wtype">${partOfSpeech}</h3>
             <div class="line"></div>
           </div>
 
@@ -256,7 +251,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             </div>
           </div>
           <div class="word-type">
-            <h3 class="wtype">verb</h3>
+            <h3 class="wtype">${isverb}</h3>
             <div class="line"></div>
           </div>
           <h3 class="meaning">meaning</h3>
@@ -281,8 +276,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 
           <div class="source-div">
             <h3>source</h3>
-            <a href="#"
-              >https://en.wiktionary.org/wiki/keyboard
+            <a href="${sourceUrl}"
+              >${sourceUrl}
               <img src="./assets/images/icon-new-window.svg" alt=""
             /></a>
           </div>
@@ -299,8 +294,20 @@ window.addEventListener("DOMContentLoaded", async () => {
         </section>
       </div>
 `;
-  playSound.addEventListener("click", () => {
-    alert("helo");
-    pronounce.play();
+  playSound.addEventListener("click", async () => {
+    alert("h");
+
+    let playAudio = await new Audio(audio);
+    playAudio.play();
   });
+});
+
+playSound.addEventListener("click", () => {
+  alert("helo");
+  let playAudio = new Audio(
+    "https://api.dictionaryapi.dev/media/pronunciations/en/hand-uk.mp3"
+  );
+  playAudio.play();
+
+  pronounce.play();
 });
