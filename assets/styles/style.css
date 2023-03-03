@@ -407,6 +407,7 @@ main .inner-main .content .dict-head .dict-title {
 main .inner-main .content .dict-head .dict-title .dict-ttxt {
   display: flex;
   flex-direction: column;
+  width: 80%;
 }
 main .inner-main .content .dict-head .dict-title .dict-ttxt h1 {
   font-family: var(--font-bold);
@@ -420,7 +421,6 @@ main .inner-main .content .dict-head .dict-title .dict-ttxt .special {
   line-height: 24px;
 }
 main .inner-main .content .dict-head .dict-title .audio-div {
-  width: 60%;
   height: 100%;
   display: flex;
   justify-content: flex-end;

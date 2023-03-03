@@ -442,6 +442,7 @@ main {
           .dict-ttxt {
             display: flex;
             flex-direction: column;
+            width: 80%;
             h1 {
               font-family: var(--font-bold);
               font-size: var(--biggest-font-size);
@@ -458,7 +459,6 @@ main {
           }
 
           .audio-div {
-            width: 60%;
             height: 100%;
             // background-color: red;
             display: flex;
