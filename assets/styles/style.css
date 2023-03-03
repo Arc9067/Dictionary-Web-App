@@ -324,12 +324,12 @@ main .inner-main .search-div {
   flex-direction: column;
 }
 main .inner-main .search-div .fieldErr {
-  outline: 0.7px solid;
-  outline-color: var(--err-clr);
+  border: 0.7px solid;
+  border-color: var(--err-clr);
 }
 main .inner-main .search-div .fieldActive {
-  outline: 0.7px inset;
-  outline-color: var(--import-clr);
+  border: 0.7px inset;
+  border-color: var(--import-clr);
 }
 main .inner-main .search-div fieldset {
   width: 100%;
@@ -349,7 +349,6 @@ main .inner-main .search-div fieldset .inner-fieldset input {
   width: 90%;
   height: 90%;
   background-color: transparent;
-  outline: none;
   border: none;
   border-radius: inherit;
   color: var(--input-clr);
