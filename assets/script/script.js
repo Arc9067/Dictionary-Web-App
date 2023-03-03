@@ -106,16 +106,16 @@ searchInput.addEventListener("keyup", () => {
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
-  content.innerHTML = `          <div class="error-in">
-            <h1>😕</h1>
-            <h3>no definitions found</h3>
-            <p>
-              Sorry pal, we couldn't find definitions for the word you were
-              looking for. You can try the search again at later time or head to
-              the web instead.
-            </p>
-          </div>
-`;
+//   content.innerHTML = `          <div class="error-in">
+//             <h1>😕</h1>
+//             <h3>no definitions found</h3>
+//             <p>
+//               Sorry pal, we couldn't find definitions for the word you were
+//               looking for. You can try the search again at later time or head to
+//               the web instead.
+//             </p>
+//           </div>
+// `;
   const amazingWords = [
     "Time",
     "Person",
@@ -184,130 +184,12 @@ window.addEventListener("DOMContentLoaded", async () => {
   let audio = phonetics[0].audio;
   console.log(audio);
   let isverb = data[0].meanings[1].partOfSpeech;
-  let defi =  data[0].meanings[1].definitions;
+  let defi = data[0].meanings[1].definitions;
 
   searchInput.value = word;
-  content.innerHTML = `          <div class="dict-head">
-            <div class="dict-title">
-              <div class="dict-ttxt">
-                <h1 class="searchword">${word}</h1>
-                <h3 class="special phonetic">${phonetic}</h3>
-              </div>
-              <div class="audio-div">
-                <audio
-                  src="${audio}"
-                  controls
-                  class="dictionary-pronounce"
-                ></audio>
-                <img
-                  src="./assets/images/icon-play.svg"
-                  alt="play sound"
-                  class="play-sound"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="word-type">
-            <h3 class="wtype">${partOfSpeech}</h3>
-            <div class="line"></div>
-          </div>
-
-          <h3 class="meaning">meaning</h3>
-
-          <div class="meaning-div">
-            <ul class="meaning-ul">
-              <li>
-                <span>
-                  (etc.) A set of keys used to operate a typewriter, computer
-                  etc.
-                </span>
-              </li>
-              <li>
-                <span>
-                  A component of many instruments including the piano, organ,
-                  and harpsichord consisting of usually black and white keys
-                  that cause different tones to be produced when struck.
-                </span>
-              </li>
-              <li>
-                <span>
-                  A device with keys of a musical keyboard, used to control
-                  electronic sound-producing devices which may be built into or
-                  separate from the keyboard device.
-                </span>
-              </li>
-              <li>
-                <span>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Iusto, et?
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div class="synonyms-div">
-            <h3>synonyms</h3>
-            <div class="synonyms-txt">
-              <span>electronic keyboard</span>
-            </div>
-          </div>
-          <div class="word-type">
-            <h3 class="wtype">${isverb}</h3>
-            <div class="line"></div>
-          </div>
-          <h3 class="meaning">meaning</h3>
-          <div class="verb-example">
-            <ul class="example-ul">
-              <li><span>To type on a computer keyboard.</span></li>
-              <li>
-                <span
-                  >“Keyboarding is the part of this job I hate the most.”</span
-                >
-              </li>
-              <li><span>To type on a computer keyboard.</span></li>
-              <li>
-                <span
-                  >“Keyboarding is the part of this job I hate the most.”</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <div class="line"></div>
-
-          <div class="source-div">
-            <h3>source</h3>
-            <a href="${sourceUrl}"
-              >${sourceUrl}
-              <img src="./assets/images/icon-new-window.svg" alt=""
-            /></a>
-          </div>
-
-          <!-- <div class="error-in">
-            <h1>😕</h1>
-            <h3>no definitions found</h3>
-            <p>
-              Sorry pal, we couldn't find definitions for the word you were
-              looking for. You can try the search again at later time or head to
-              the web instead.
-            </p>
-          </div> -->
-        </section>
-      </div>
-`;
-  playSound.addEventListener("click", async () => {
-    alert("h");
-
-    let playAudio = await new Audio(audio);
+  playSound.addEventListener("click", () => {
+  
+    let playAudio = new Audio(audio);
     playAudio.play();
   });
-});
-
-playSound.addEventListener("click", () => {
-  alert("helo");
-  let playAudio = new Audio(
-    "https://api.dictionaryapi.dev/media/pronunciations/en/hand-uk.mp3"
-  );
-  playAudio.play();
-
-  pronounce.play();
 });
