@@ -17,6 +17,12 @@ const pronounce = document.querySelector(".dictionary-pronounce");
 const wordType = document.querySelector(".wtype");
 
 let content = document.querySelector(".content");
+let dictTtxt = document.querySelector(".dict-ttxt");
+let AudioDiv = document.querySelector(".audio-div");
+
+
+
+//code starts here
 toggleBtn.addEventListener("click", async () => {
   await document.documentElement.classList.toggle("dark-theme");
   if (document.documentElement.classList.contains("dark-theme")) {
@@ -106,16 +112,16 @@ searchInput.addEventListener("keyup", () => {
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
-//   content.innerHTML = `          <div class="error-in">
-//             <h1>😕</h1>
-//             <h3>no definitions found</h3>
-//             <p>
-//               Sorry pal, we couldn't find definitions for the word you were
-//               looking for. You can try the search again at later time or head to
-//               the web instead.
-//             </p>
-//           </div>
-// `;
+  //   content.innerHTML = `          <div class="error-in">
+  //             <h1>😕</h1>
+  //             <h3>no definitions found</h3>
+  //             <p>
+  //               Sorry pal, we couldn't find definitions for the word you were
+  //               looking for. You can try the search again at later time or head to
+  //               the web instead.
+  //             </p>
+  //           </div>
+  // `;
   const amazingWords = [
     "Time",
     "Person",
@@ -170,26 +176,42 @@ window.addEventListener("DOMContentLoaded", async () => {
   const randomWords =
     amazingWords[Math.floor(Math.random() * amazingWords.length)];
 
-  const fetching = await fetch(
-    `https://api.dictionaryapi.dev/api/v2/entries/en/${randomWords}`
-  );
-  const data = await fetching.json();
-  let { word, phonetic, phonetics } = await data[0];
-  console.log(word);
-  console.log(phonetic);
-  let sourceUrl = await data[0].sourceUrls;
-  let meanings = await data[0].meanings;
-  let meaningpart = await meanings[0];
-  let { partOfSpeech, definitions, synonyms } = meaningpart;
-  let audio = phonetics[0].audio;
-  console.log(audio);
-  let isverb = data[0].meanings[1].partOfSpeech;
-  let defi = data[0].meanings[1].definitions;
+  try {
+    const fetching = await fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${randomWords}`
+    );
+    const data = await fetching.json();
+    let { word, phonetic, phonetics } = await data[0];
+    console.log(word);
+    console.log(phonetic);
+    let sourceUrl = await data[0].sourceUrls;
+    let meanings = await data[0].meanings;
+    let meaningpart = await meanings[0];
+    let { partOfSpeech, definitions, synonyms } = meaningpart;
+    let audio = phonetics[0].audio;
+    console.log(audio);
+    let isverb = data[0].meanings[1].partOfSpeech;
+    let defi = data[0].meanings[1].definitions;
 
-  searchInput.value = word;
-  playSound.addEventListener("click", () => {
-  
-    let playAudio = new Audio(audio);
-    playAudio.play();
-  });
+    searchInput.value = word;
+    playSound.addEventListener("click", () => {
+      let playAudio = new Audio(audio);
+      playAudio.play();
+    });
+
+    /* setting up */
+    if (phonetic && word) {
+      dictTtxt.innerHTML = `<h1 class="searchword">${word}</h1>
+                <h3 class="special phonetic">${phonetic}</h3>
+`;
+    } else {
+      dictTtxt.innerHTML = `<h1 class="searchword">${word}</h1>`;
+    }
+
+    if(!audio){
+      AudioDiv.innerHTML=``
+    }
+  } catch {
+    // console.log("something happeed");
+  }
 });
