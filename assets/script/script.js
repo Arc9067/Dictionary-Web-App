@@ -15,13 +15,13 @@ const err = document.querySelector(".error");
 const playSound = document.querySelector(".play-sound");
 const pronounce = document.querySelector(".dictionary-pronounce");
 const wordType = document.querySelector(".wtype");
-
+const loading = document.querySelector(".error-in");
 let content = document.querySelector(".content");
 let dictTtxt = document.querySelector(".dict-ttxt");
 let AudioDiv = document.querySelector(".audio-div");
-
-
-
+let meaningUl = document.querySelector(".meaning-ul");
+let synonymsTxt = document.querySelector(".synonyms-txt");
+let wtype2 = document.querySelector(".wtype2");
 //code starts here
 toggleBtn.addEventListener("click", async () => {
   await document.documentElement.classList.toggle("dark-theme");
@@ -178,7 +178,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const fetching = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${randomWords}`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/night`
     );
     const data = await fetching.json();
     let { word, phonetic, phonetics } = await data[0];
@@ -207,11 +207,46 @@ window.addEventListener("DOMContentLoaded", async () => {
     } else {
       dictTtxt.innerHTML = `<h1 class="searchword">${word}</h1>`;
     }
-
-    if(!audio){
-      AudioDiv.innerHTML=``
+    if (!audio) {
+      AudioDiv.innerHTML = ``;
     }
+    if (partOfSpeech) {
+      wordType.textContent = partOfSpeech;
+      console.log(partOfSpeech);
+    }
+    if (definitions) {
+      let worddefini = definitions
+        .map((ele) => {
+          return `<li><span>${ele.definition}</span></li>`;
+        })
+        .join("");
+      meaningUl.innerHTML = worddefini;
+    }
+    if (synonyms) {
+      let wordsyn = synonyms
+        .map((ele) => {
+          return `<span>${ele}</span>`;
+        })
+        .join("");
+      synonymsTxt.innerHTML = wordsyn;
+    } else {
+      synonymsTxt.innerHTML = word;
+    }
+    if (isverb) {
+      wtype2.textContent = isverb;
+    }
+    console.log(defi)
   } catch {
     // console.log("something happeed");
+    content.innerHTML = `          <div class="error-in">
+            <h1>😕</h1>
+            <h3>no definitions found</h3>
+            <p>
+              Sorry pal, we couldn't find definitions for the word you were
+              looking for. You can try the search again at later time or head to
+              the web instead.
+            </p>
+          </div>
+`;
   }
 });

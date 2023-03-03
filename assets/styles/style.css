@@ -430,6 +430,21 @@ main .inner-main .content .dict-head .dict-title .audio-div img {
   height: 48px;
   cursor: pointer;
 }
+main .inner-main .content .dict-head .dict-title .audio-div .pause-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--import-clr);
+  background: rgba(164, 69, 237, 0.205);
+  mix-blend-mode: normal;
+  color: var(--import-clr);
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
 main .inner-main .content .word-type {
   width: 100%;
   display: flex;

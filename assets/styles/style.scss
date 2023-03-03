@@ -469,6 +469,22 @@ main {
               height: 48px;
               cursor: pointer;
             }
+
+            .pause-icon {
+              width: 48px;
+              height: 48px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: var(--import-clr);
+              background: rgba(164, 69, 237, 0.205);
+              mix-blend-mode: normal;
+              color: var(--import-clr);
+              font-size: 20px;
+              cursor: pointer;
+              display: none;
+            }
           }
         }
       }
