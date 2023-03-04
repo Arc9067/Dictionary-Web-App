@@ -112,16 +112,6 @@ searchInput.addEventListener("keyup", () => {
 });
 
 window.addEventListener("DOMContentLoaded", async () => {
-  //   content.innerHTML = `          <div class="error-in">
-  //             <h1>😕</h1>
-  //             <h3>no definitions found</h3>
-  //             <p>
-  //               Sorry pal, we couldn't find definitions for the word you were
-  //               looking for. You can try the search again at later time or head to
-  //               the web instead.
-  //             </p>
-  //           </div>
-  // `;
   const amazingWords = [
     "Time",
     "Person",
@@ -178,66 +168,117 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const fetching = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/night`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/ivory`
     );
     const data = await fetching.json();
-    let { word, phonetic, phonetics } = await data[0];
-    console.log(word);
-    console.log(phonetic);
-    let sourceUrl = await data[0].sourceUrls;
-    let meanings = await data[0].meanings;
-    let meaningpart = await meanings[0];
-    let { partOfSpeech, definitions, synonyms } = meaningpart;
-    let audio = phonetics[0].audio;
-    console.log(audio);
-    let isverb = data[0].meanings[1].partOfSpeech;
-    let defi = data[0].meanings[1].definitions;
+    data.map((element) => {
+      let { word, phonetics, meanings, sourceUrls } = element;
+      /** Iteration starts here */
+      let right = phonetics.find((phonetic) => {
+        let rightOut = phonetic.text !== "" && phonetic.audio !== "";
+        return rightOut;
+      });
+      let { text, audio } = right;
 
-    searchInput.value = word;
-    playSound.addEventListener("click", () => {
+      content.innerHTML = `        
+          <div class="dict-head">
+            <div class="dict-title">
+              <div class="dict-ttxt">
+                <h1 class="searchword">${word}</h1>
+                <h3 class="special phonetic">${text}</h3>
+              </div>
+              <div class="audio-div">
+                <img
+                  src="./assets/images/icon-play.svg"
+                  alt="play sound"
+                  class="play-sound"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="word-type">
+            <h3 class="wtype">noun</h3>
+            <div class="line"></div>
+          </div>
+
+          <h3 class="meaning">meaning</h3>
+
+          <div class="meaning-div">
+            <ul class="meaning-ul">
+              <li>
+                <span>
+                  (etc.) A set of keys used to operate a typewriter, computer
+                  etc.
+                </span>
+              </li>
+              <li>
+                <span>
+                  A component of many instruments including the piano, organ,
+                  and harpsichord consisting of usually black and white keys
+                  that cause different tones to be produced when struck.
+                </span>
+              </li>
+              <li>
+                <span>
+                  A device with keys of a musical keyboard, used to control
+                  electronic sound-producing devices which may be built into or
+                  separate from the keyboard device.
+                </span>
+              </li>
+              <li>
+                <span>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Iusto, et?
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="synonyms-div">
+            <h3>synonyms</h3>
+            <div class="synonyms-txt">
+              <span>electronic keyboard</span>
+            </div>
+          </div>
+          <div class="word-type">
+            <h3 class="wtype wtype2">noun</h3>
+            <div class="line"></div>
+          </div>
+          <h3 class="meaning">meaning</h3>
+          <div class="verb-example">
+            <ul class="example-ul">
+              <li><span>To type on a computer keyboard.</span></li>
+              <li>
+                <span
+                  >“Keyboarding is the part of this job I hate the most.”</span
+                >
+              </li>
+              <li><span>To type on a computer keyboard.</span></li>
+              <li>
+                <span
+                  >“Keyboarding is the part of this job I hate the most.”</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="line"></div>
+
+          <div class="source-div">
+            <h3>source</h3>
+            <a href="#"
+              >https://en.wiktionary.org/wiki/keyboard
+              <img src="./assets/images/icon-new-window.svg" alt=""
+            /></a>
+          </div>`;
+      let playSound = document.querySelector(".play-sound");
+
       let playAudio = new Audio(audio);
-      playAudio.play();
-    });
 
-    /* setting up */
-    if (phonetic && word) {
-      dictTtxt.innerHTML = `<h1 class="searchword">${word}</h1>
-                <h3 class="special phonetic">${phonetic}</h3>
-`;
-    } else {
-      dictTtxt.innerHTML = `<h1 class="searchword">${word}</h1>`;
-    }
-    if (!audio) {
-      AudioDiv.innerHTML = ``;
-    }
-    if (partOfSpeech) {
-      wordType.textContent = partOfSpeech;
-      console.log(partOfSpeech);
-    }
-    if (definitions) {
-      let worddefini = definitions
-        .map((ele) => {
-          return `<li><span>${ele.definition}</span></li>`;
-        })
-        .join("");
-      meaningUl.innerHTML = worddefini;
-    }
-    if (synonyms) {
-      let wordsyn = synonyms
-        .map((ele) => {
-          return `<span>${ele}</span>`;
-        })
-        .join("");
-      synonymsTxt.innerHTML = wordsyn;
-    } else {
-      synonymsTxt.innerHTML = word;
-    }
-    if (isverb) {
-      wtype2.textContent = isverb;
-    }
-    console.log(defi)
-  } catch {
-    // console.log("something happeed");
+      playSound.addEventListener("click", () => {
+        playAudio.play();
+      });
+    });
+  } catch (err) {
     content.innerHTML = `          <div class="error-in">
             <h1>😕</h1>
             <h3>no definitions found</h3>
@@ -248,5 +289,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             </p>
           </div>
 `;
+    console.log(err);
   }
 });
