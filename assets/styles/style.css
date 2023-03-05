@@ -445,32 +445,37 @@ main .inner-main .content .dict-head .dict-title .audio-div .pause-icon {
   cursor: pointer;
   display: none;
 }
-main .inner-main .content .word-type {
+main .inner-main .content .word-type-div {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+main .inner-main .content .word-type-div .word-div .word-type {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-main .inner-main .content .word-type .wtype {
+main .inner-main .content .word-type-div .word-div .word-type .wtype {
   font-family: var(--font-bi);
   line-height: 22px;
   font-style: italic;
   font-size: var(--h2-font-size);
 }
-main .inner-main .content .word-type .line {
+main .inner-main .content .word-type-div .word-div .word-type .line {
   width: 80%;
   height: 2px;
   background-color: var(--line);
 }
-main .inner-main .content .meaning {
+main .inner-main .content .word-type-div .word-div .meaning {
   font-size: var(--normal-font-size);
   text-transform: capitalize;
   color: var(--meaning);
 }
-main .inner-main .content .meaning-div {
+main .inner-main .content .word-type-div .word-div .meaning-div {
   width: 100%;
 }
-main .inner-main .content .meaning-div .meaning-ul {
+main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul {
   width: 100%;
   padding-left: 10px;
   display: flex;
@@ -480,15 +485,21 @@ main .inner-main .content .meaning-div .meaning-ul {
   gap: 20px;
   list-style-position: outside;
 }
-main .inner-main .content .meaning-div .meaning-ul li {
+main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul li {
   width: 100%;
   color: var(--import-clr);
   line-height: 24px;
 }
-main .inner-main .content .meaning-div .meaning-ul li span {
+main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul li span {
   color: var(--span-clr);
 }
-main .inner-main .content .synonyms-div {
+main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul li.example {
+  list-style: none;
+}
+main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul li.example span {
+  color: var(--light-gray);
+}
+main .inner-main .content .word-type-div .word-div .synonyms-div {
   width: 100%;
   display: flex;
   -moz-column-gap: 1rem;
@@ -496,49 +507,22 @@ main .inner-main .content .synonyms-div {
   row-gap: 0.5rem;
   flex-wrap: wrap;
 }
-main .inner-main .content .synonyms-div h3 {
+main .inner-main .content .word-type-div .word-div .synonyms-div h3 {
   font-size: var(--normal-font-size);
   text-transform: capitalize;
   color: var(--meaning);
 }
-main .inner-main .content .synonyms-div .synonyms-txt {
+main .inner-main .content .word-type-div .word-div .synonyms-div .synonyms-txt {
   display: inline-flex;
   flex-flow: row wrap;
   row-gap: 0.5rem;
   -moz-column-gap: 1rem;
        column-gap: 1rem;
 }
-main .inner-main .content .synonyms-div .synonyms-txt span {
+main .inner-main .content .word-type-div .word-div .synonyms-div .synonyms-txt span {
   color: var(--import-clr);
   font-family: var(--font-bold);
   cursor: pointer;
-}
-main .inner-main .content .verb-example {
-  width: 100%;
-}
-main .inner-main .content .verb-example .example-ul {
-  width: 100%;
-  padding-left: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: start;
-  gap: 20px;
-  list-style-position: outside;
-}
-main .inner-main .content .verb-example .example-ul li {
-  width: 100%;
-  color: var(--import-clr);
-  line-height: 24px;
-}
-main .inner-main .content .verb-example .example-ul li span {
-  color: var(--span-clr);
-}
-main .inner-main .content .verb-example .example-ul li:nth-child(even) {
-  list-style: none;
-}
-main .inner-main .content .verb-example .example-ul li:nth-child(even) span {
-  color: var(--light-gray);
 }
 main .inner-main .content .line {
   height: 1px;

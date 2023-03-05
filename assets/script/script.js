@@ -168,7 +168,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const fetching = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/ivory`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${randomWords}`
     );
     const data = await fetching.json();
     data.map((element) => {
@@ -179,6 +179,51 @@ window.addEventListener("DOMContentLoaded", async () => {
         return rightOut;
       });
       let { text, audio } = right;
+
+      let realmean = meanings
+        .map((ele) => {
+          let { partOfSpeech, definitions, synonyms } = ele;
+
+          console.log(partOfSpeech);
+
+          let eachdefine = definitions
+            .map((ele) => {
+              if (!ele.example) {
+                return `<li><span>${ele.definition}</span></li>`;
+              } else {
+                return `
+              <li><span>${ele.definition}</span></li>
+              <li class="example"><span>"${ele.example}"</span></li>`;
+              }
+              // return ele.example;
+            })
+            .join("");
+          let eachsynonym = synonyms
+            .map((ele) => {
+              return `<span>${ele}</span>`;
+            })
+            .join("");
+
+          return `<div class="word-div">
+              <div class="word-type">
+                <h3 class="wtype">${partOfSpeech}</h3>
+                <div class="line"></div>
+              </div>
+              <h3 class="meaning">meaning</h3>
+              <div class="meaning-div">
+                <ul class="meaning-ul">
+                ${eachdefine}
+                </ul>
+              </div>
+              <div class="synonyms-div">
+                <h3>synonyms</h3>
+                <div class="synonyms-txt">
+                  ${eachsynonym}
+                </div>
+              </div>
+            </div>`;
+        })
+        .join("");
 
       content.innerHTML = `        
           <div class="dict-head">
@@ -196,80 +241,22 @@ window.addEventListener("DOMContentLoaded", async () => {
               </div>
             </div>
           </div>
-          <div class="word-type">
-            <h3 class="wtype">noun</h3>
-            <div class="line"></div>
+          <div class="word-type-div">
+          ${realmean}
           </div>
 
-          <h3 class="meaning">meaning</h3>
-
-          <div class="meaning-div">
-            <ul class="meaning-ul">
-              <li>
-                <span>
-                  (etc.) A set of keys used to operate a typewriter, computer
-                  etc.
-                </span>
-              </li>
-              <li>
-                <span>
-                  A component of many instruments including the piano, organ,
-                  and harpsichord consisting of usually black and white keys
-                  that cause different tones to be produced when struck.
-                </span>
-              </li>
-              <li>
-                <span>
-                  A device with keys of a musical keyboard, used to control
-                  electronic sound-producing devices which may be built into or
-                  separate from the keyboard device.
-                </span>
-              </li>
-              <li>
-                <span>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Iusto, et?
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div class="synonyms-div">
-            <h3>synonyms</h3>
-            <div class="synonyms-txt">
-              <span>electronic keyboard</span>
-            </div>
-          </div>
-          <div class="word-type">
-            <h3 class="wtype wtype2">noun</h3>
-            <div class="line"></div>
-          </div>
-          <h3 class="meaning">meaning</h3>
-          <div class="verb-example">
-            <ul class="example-ul">
-              <li><span>To type on a computer keyboard.</span></li>
-              <li>
-                <span
-                  >“Keyboarding is the part of this job I hate the most.”</span
-                >
-              </li>
-              <li><span>To type on a computer keyboard.</span></li>
-              <li>
-                <span
-                  >“Keyboarding is the part of this job I hate the most.”</span
-                >
-              </li>
-            </ul>
-          </div>
 
           <div class="line"></div>
 
           <div class="source-div">
             <h3>source</h3>
-            <a href="#"
-              >https://en.wiktionary.org/wiki/keyboard
+            <a href="${sourceUrls[0]}"
+              >${sourceUrls[0]}
               <img src="./assets/images/icon-new-window.svg" alt=""
             /></a>
           </div>`;
+
+
       let playSound = document.querySelector(".play-sound");
 
       let playAudio = new Audio(audio);
