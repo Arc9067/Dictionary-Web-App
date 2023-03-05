@@ -174,11 +174,20 @@ window.addEventListener("DOMContentLoaded", async () => {
     data.map((element) => {
       let { word, phonetics, meanings, sourceUrls } = element;
       /** Iteration starts here */
-      let right = phonetics.find((phonetic) => {
+      let right = phonetics.findLast((phonetic) => {
         let rightOut = phonetic.text !== "" && phonetic.audio !== "";
+
         return rightOut;
       });
-      let { text, audio } = right;
+      let text, audio;
+      if (right) {
+        text = right.text;
+        audio = right.audio;
+      } else {
+        text = "empty";
+        audio =
+          "https://api.dictionaryapi.dev/media/pronunciations/en/empty-uk.mp3";
+      }
 
       let realmean = meanings
         .map((ele) => {
@@ -256,7 +265,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             /></a>
           </div>`;
 
-
       let playSound = document.querySelector(".play-sound");
 
       let playAudio = new Audio(audio);
@@ -266,6 +274,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       });
     });
   } catch (err) {
+    alert(err);
     content.innerHTML = `          <div class="error-in">
             <h1>😕</h1>
             <h3>no definitions found</h3>
