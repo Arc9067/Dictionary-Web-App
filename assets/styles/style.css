@@ -57,7 +57,7 @@ variable declaration starts here
   --stroke: #e9e9e9;
   --line: #e9e9e9;
   --field-clr: #f4f4f4;
-  --max-width: 1700px;
+  --max-width: 500px;
   --serif-bold: "Lora-Bold";
   --san-serif-bold: "Inter-Bold";
   --mono-bold: "Inconsolata-Bold";
@@ -499,7 +499,7 @@ main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul li l
 main .inner-main .content .word-type-div .word-div .meaning-div .meaning-ul li li.example span {
   color: var(--light-gray);
 }
-main .inner-main .content .word-type-div .word-div .meaning-div .synonyms-div {
+main .inner-main .content .word-type-div .word-div .synonyms-div {
   width: 100%;
   display: flex;
   -moz-column-gap: 1rem;
@@ -507,33 +507,33 @@ main .inner-main .content .word-type-div .word-div .meaning-div .synonyms-div {
   row-gap: 0.5rem;
   flex-wrap: wrap;
 }
-main .inner-main .content .word-type-div .word-div .meaning-div .synonyms-div h3 {
+main .inner-main .content .word-type-div .word-div .synonyms-div h3 {
   font-size: var(--normal-font-size);
   text-transform: capitalize;
   color: var(--meaning);
 }
-main .inner-main .content .word-type-div .word-div .meaning-div .synonyms-div .synonyms-txt {
+main .inner-main .content .word-type-div .word-div .synonyms-div .synonyms-txt {
   display: inline-flex;
   flex-flow: row wrap;
   row-gap: 0.5rem;
   -moz-column-gap: 1rem;
        column-gap: 1rem;
 }
-main .inner-main .content .word-type-div .word-div .meaning-div .synonyms-div .synonyms-txt span {
+main .inner-main .content .word-type-div .word-div .synonyms-div .synonyms-txt span {
   color: var(--import-clr);
   font-family: var(--font-bold);
   cursor: pointer;
 }
-main .inner-main .content .word-type-div .line {
+main .inner-main .content .line {
   height: 1px;
   width: 100%;
   background-color: var(--line);
 }
-main .inner-main .content .word-type-div .source-div {
+main .inner-main .content .source-div {
   width: 100%;
   padding-bottom: 30px;
 }
-main .inner-main .content .word-type-div .source-div h3 {
+main .inner-main .content .source-div h3 {
   font-size: var(--normal-font-size);
   color: var(--light-gray);
   text-transform: capitalize;
@@ -541,13 +541,13 @@ main .inner-main .content .word-type-div .source-div h3 {
   text-decoration-color: var(--light-gray);
   text-decoration-thickness: 2px;
 }
-main .inner-main .content .word-type-div .source-div a {
+main .inner-main .content .source-div a {
   display: flex;
   gap: 0.5rem;
   color: var(--span-clr);
   text-decoration-line: underline;
 }
-main .inner-main .content .word-type-div .error-in {
+main .inner-main .content .error-in {
   min-height: 60vh;
   width: 100%;
   display: flex;
@@ -556,14 +556,14 @@ main .inner-main .content .word-type-div .error-in {
   flex-direction: column;
   text-align: center;
 }
-main .inner-main .content .word-type-div .error-in h1 {
+main .inner-main .content .error-in h1 {
   font-size: 65px;
   animation-name: shake;
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-delay: 2s;
 }
-main .inner-main .content .word-type-div .error-in h3 {
+main .inner-main .content .error-in h3 {
   text-transform: capitalize;
   font-family: var(--font-bold);
 }
