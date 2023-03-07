@@ -384,7 +384,7 @@ main {
 
           input {
             width: 90%;
-            height: 90%;
+            height: 3rem;
             background-color: transparent;
             border: none;
             border-radius: inherit;
@@ -637,6 +637,7 @@ main {
     main {
       .inner-main {
         width: 70%;
+        background-color: red;
 
         .search-div {
           fieldset {

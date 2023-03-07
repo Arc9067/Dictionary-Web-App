@@ -168,7 +168,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const fetching = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${randomWords}`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/number`
     );
     const data = await fetching.json();
     data.map((element) => {
