@@ -178,6 +178,32 @@ body {
   color: var(--head-clr);
   line-height: 1.3;
   font-size: var(--normal-font-size);
+  overflow-x: hidden;
+}
+
+.ploading-div {
+  // background-color: red;
+  background-color: var(--body-clr);
+  min-height: 100vh;
+  z-index: 100000000;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  position: fixed;
+  inset: 0;
+  @keyframes spinner {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .spin-div {
+    width: 2rem;
+    height: 2rem;
+    border: 5px solid var(--import-clr);
+    border-radius: 50%;
+    border-top-color: var(--head-clr);
+    animation: spinner 1s linear infinite;
+  }
 }
 
 header {
@@ -458,6 +484,27 @@ main {
       flex-direction: column;
       gap: 20px;
 
+      .loading-div {
+        // background-color: red;
+        min-height: 50vh;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        @keyframes spinner {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        .spin-div {
+          width: 2rem;
+          height: 2rem;
+          border: 5px solid var(--import-clr);
+          border-radius: 50%;
+          border-top-color: var(--head-clr);
+          animation: spinner 1s linear infinite;
+        }
+      }
+
       .dict-head {
         width: 100%;
         display: flex;
@@ -710,3 +757,4 @@ main {
     }
   }
 }
+

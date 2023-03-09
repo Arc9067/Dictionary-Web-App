@@ -23,6 +23,7 @@ let meaningUl = document.querySelector(".meaning-ul");
 let synonymsTxt = document.querySelector(".synonyms-txt");
 let wtype2 = document.querySelector(".wtype2");
 let typing = document.querySelector(".typing");
+let loadingDiv = document.querySelector(".loading-div");
 
 //code starts here
 toggleBtn.addEventListener("click", async () => {
@@ -204,6 +205,12 @@ searchInput.addEventListener("keypress", (event) => {
 
 async function SearchFunc(element) {
   try {
+    content.innerHTML = `          <div class="loading-div">
+            <div class="spin-div">
+              
+            </div>
+          </div>
+`;
     const fetching = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${element}`
     );
@@ -327,11 +334,9 @@ async function SearchFunc(element) {
             </p>
             </div>
             `;
-    setTimeout(() => {
-      SearchFunc("hey");
-      searchInput.value = "hey";
-    }, 5000);
-
-    console.log(err);
   }
 }
+
+window.addEventListener("load", () => {
+  loadingDiv.style.display = "none";
+});
