@@ -155,8 +155,8 @@ General styling begins here
   box-sizing: border-box;
 }
 *::selection {
-  background-color: var(--import-clr);
   color: var(--body-clr);
+  background-color: var(--head-clr);
 }
 
 a,
@@ -231,6 +231,7 @@ header {
           // flex-direction: column;
           // align-items: center;
           margin: 0;
+          z-index: 100000;
 
           ul {
             background-color: var(--type-clr);
@@ -376,6 +377,37 @@ main {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        position: relative;
+
+        .disblock {
+          display: block !important;
+        }
+
+        .typing {
+          min-height: 3rem;
+          width: 100%;
+          // background-color: green;
+          position: absolute;
+          top: 50px;
+          display: flex;
+          // justify-content: center;
+          align-items: center;
+          gap: 1rem;
+          display: none;
+
+          p {
+            font-family: var(--font-regular);
+            font-size: var(--small-font-size);
+            color: var(--span-clr);
+            display: flex;
+            gap: 1rem;
+
+            i {
+              color: var(--import-clr) !important;
+              font-size: var(--normal-font-size);
+            }
+          }
+        }
 
         .inner-fieldset {
           // background-color: red;
@@ -438,11 +470,13 @@ main {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          margin-top: 2rem;
 
           .dict-ttxt {
             display: flex;
             flex-direction: column;
             width: 80%;
+            column-gap: 0.8rem;
             h1 {
               font-family: var(--font-bold);
               font-size: var(--biggest-font-size);

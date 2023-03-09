@@ -22,6 +22,8 @@ let AudioDiv = document.querySelector(".audio-div");
 let meaningUl = document.querySelector(".meaning-ul");
 let synonymsTxt = document.querySelector(".synonyms-txt");
 let wtype2 = document.querySelector(".wtype2");
+let typing = document.querySelector(".typing");
+
 //code starts here
 toggleBtn.addEventListener("click", async () => {
   await document.documentElement.classList.toggle("dark-theme");
@@ -79,19 +81,6 @@ addmono.addEventListener("click", () => {
     document.body.classList.remove("san-serif");
     arrowIcon.classList.toggle("arrow-rotate");
     selectFont.classList.toggle("dflex");
-  }
-});
-
-searchIcon.addEventListener("click", () => {
-  if (searchInput.value === "") {
-    if (!fieldSet.classList.contains("fieldActive")) {
-      fieldSet.classList.remove("fieldActive");
-      err.style.display = "block";
-      fieldSet.classList.add("fieldErr");
-    }
-  } else {
-    err.style.display = "none";
-    fieldSet.classList.remove("fieldErr");
   }
 });
 
@@ -166,370 +155,59 @@ window.addEventListener("DOMContentLoaded", async () => {
   let randomWords =
     amazingWords[Math.floor(Math.random() * amazingWords.length)];
 
-  try {
-    const fetching = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${randomWords}`
-    );
-    let data = await fetching.json();
-    data.map((element) => {
-      let { word, phonetics, meanings, sourceUrls } = element;
-      /** Iteration starts here */
-      let right = phonetics.findLast((phonetic) => {
-        let rightOut = phonetic.text !== "" && phonetic.audio !== "";
+  SearchFunc(randomWords);
+});
 
-        return rightOut;
-      });
-      let text, audio;
-      if (right) {
-        text = right.text;
-        audio = right.audio;
-      } else {
-        text = "empty";
-        audio =
-          "https://api.dictionaryapi.dev/media/pronunciations/en/empty-uk.mp3";
-      }
+searchIcon.addEventListener("click", async () => {
+  let invalue = searchInput.value;
+  SearchFunc(invalue);
+  searchInput.value = invalue;
 
-      let realmean = meanings
-        .map((ele) => {
-          let { partOfSpeech, definitions, synonyms } = ele;
-
-          console.log(partOfSpeech);
-
-          let eachdefine = definitions
-            .map((ele) => {
-              if (!ele.example) {
-                return `<li><span>${ele.definition}</span></li>`;
-              } else {
-                return `
-              <li><span>${ele.definition}</span></li>
-              <li class="example"><span>"${ele.example}"</span></li>`;
-              }
-              // return ele.example;
-            })
-            .join("");
-          let eachsynonym = synonyms
-            .map((ele) => {
-              return `<span class="symn">${ele}</span>`;
-            })
-            .join("");
-
-          return `<div class="word-div">
-              <div class="word-type">
-                <h3 class="wtype">${partOfSpeech}</h3>
-                <div class="line"></div>
-              </div>
-              <h3 class="meaning">meaning</h3>
-              <div class="meaning-div">
-                <ul class="meaning-ul">
-                ${eachdefine}
-                </ul>
-              </div>
-              <div class="synonyms-div">
-                <h3>synonyms</h3>
-                <div class="synonyms-txt">
-                  ${eachsynonym}
-                </div>
-              </div>
-            </div>`;
-        })
-        .join("");
-
-      content.innerHTML = `        
-          <div class="dict-head">
-            <div class="dict-title">
-              <div class="dict-ttxt">
-                <h1 class="searchword">${word}</h1>
-                <h3 class="special phonetic">${text}</h3>
-              </div>
-              <div class="audio-div">
-                <img
-                  src="./assets/images/icon-play.svg"
-                  alt="play sound"
-                  class="play-sound"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="word-type-div">
-          ${realmean}
-          </div>
-
-
-          <div class="line"></div>
-
-          <div class="source-div">
-            <h3>source</h3>
-            <a href="${sourceUrls[0]}"
-              >${sourceUrls[0]}
-              <img src="./assets/images/icon-new-window.svg" alt=""
-            /></a>
-          </div>`;
-
-      searchInput.value = randomWords;
-
-      let symn = document.querySelectorAll(".symn");
-      symn.forEach((ele) => {
-        ele.addEventListener("click", async () => {
-          const fetching = await fetch(
-            `https://api.dictionaryapi.dev/api/v2/entries/en/${ele.textContent}`
-          );
-          let data = await fetching.json();
-          console.log(data);
-          console.log(fetching);
-          data.map((element) => {
-            let { word, phonetics, meanings, sourceUrls } = element;
-            /** Iteration starts here */
-            let right = phonetics.findLast((phonetic) => {
-              let rightOut = phonetic.text !== "" && phonetic.audio !== "";
-
-              return rightOut;
-            });
-            let text, audio;
-            if (right) {
-              text = right.text;
-              audio = right.audio;
-            } else {
-              text = "";
-              audio = "https://api.dictionaryapi.dev/media";
-            }
-
-            let realmean = meanings
-              .map((ele) => {
-                let { partOfSpeech, definitions, synonyms } = ele;
-
-                console.log(partOfSpeech);
-
-                let eachdefine = definitions
-                  .map((ele) => {
-                    if (!ele.example) {
-                      return `<li><span>${ele.definition}</span></li>`;
-                    } else {
-                      return `
-              <li><span>${ele.definition}</span></li>
-              <li class="example"><span>"${ele.example}"</span></li>`;
-                    }
-                    // return ele.example;
-                  })
-                  .join("");
-                let eachsynonym = synonyms
-                  .map((ele) => {
-                    return `<span class="symn">${ele}</span>`;
-                  })
-                  .join("");
-
-                return `<div class="word-div">
-              <div class="word-type">
-                <h3 class="wtype">${partOfSpeech}</h3>
-                <div class="line"></div>
-              </div>
-              <h3 class="meaning">meaning</h3>
-              <div class="meaning-div">
-                <ul class="meaning-ul">
-                ${eachdefine}
-                </ul>
-              </div>
-              <div class="synonyms-div">
-                <h3>synonyms</h3>
-                <div class="synonyms-txt">
-                  ${eachsynonym}
-                </div>
-              </div>
-            </div>`;
-              })
-              .join("");
-
-            content.innerHTML = `        
-          <div class="dict-head">
-            <div class="dict-title">
-              <div class="dict-ttxt">
-                <h1 class="searchword">${word}</h1>
-                <h3 class="special phonetic">${text}</h3>
-              </div>
-              <div class="audio-div">
-                <img
-                  src="./assets/images/icon-play.svg"
-                  alt="play sound"
-                  class="play-sound"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="word-type-div">
-          ${realmean}
-          </div>
-
-
-          <div class="line"></div>
-
-          <div class="source-div">
-            <h3>source</h3>
-            <a href="${sourceUrls[0]}"
-              >${sourceUrls[0]}
-              <img src="./assets/images/icon-new-window.svg" alt=""
-            /></a>
-          </div>`;
-            let playSound = document.querySelector(".play-sound");
-
-            searchInput.value = ele.textContent;
-            let playAudio = new Audio(audio);
-
-            playSound.addEventListener("click", () => {
-              playAudio.play();
-            });
-          });
-        });
-      });
-
-      let playSound = document.querySelector(".play-sound");
-
-      let playAudio = new Audio(audio ? audio : "https");
-
-      playSound.addEventListener("click", () => {
-        playAudio.play();
-      });
-    });
-  } catch (err) {
-    alert(err);
-    content.innerHTML = `          <div class="error-in">
-            <h1>😕</h1>
-            <h3>no definitions found</h3>
-            <p>
-            Sorry pal, we couldn't find definitions for the word you were
-            looking for. You can try the search again at later time or head to
-            the web instead.
-            </p>
-            </div>
-            `;
-    console.log(err);
+  if (searchInput.value === "") {
+    if (!fieldSet.classList.contains("fieldActive")) {
+      fieldSet.classList.remove("fieldActive");
+      err.style.display = "block";
+      fieldSet.classList.add("fieldErr");
+    }
+  } else {
+    err.style.display = "none";
+    fieldSet.classList.remove("fieldErr");
   }
 });
 
-try {
-  let symn = document.querySelectorAll(".symn");
-  symn.forEach((ele) => {
-    ele.addEventListener("click", async () => {
-      const fetching = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${ele.textContent}`
-      );
-      let data = await fetching.json();
-      console.log(data);
-      console.log(fetching);
-      data.map((element) => {
-        let { word, phonetics, meanings, sourceUrls } = element;
-        /** Iteration starts here */
-        let right = phonetics.findLast((phonetic) => {
-          let rightOut = phonetic.text !== "" && phonetic.audio !== "";
+searchInput.addEventListener("keypress", (event) => {
+  // let searchLenght = searchInput.value
+  // if (searchLenght.length > 3) {
+  //   setInterval(() => {
+  //     typing.classList.toggle("disblock");
+  //   },2000);
+  // }
 
-          return rightOut;
-        });
-        let text, audio;
-        if (right) {
-          text = right.text;
-          audio = right.audio;
-        } else {
-          text = "empty";
-          audio =
-            "https://api.dictionaryapi.dev/media/pronunciations/en/empty-uk.mp3";
-        }
+  let searchWord = searchInput.value;
+  let searchLenght = searchWord.length;
+  if (searchLenght >= 3) {
+    typing.classList.add("disblock");
+    setTimeout(() => {
+      typing.classList.remove("disblock");
+    }, 1000);
+  } else {
+    typing.classList.remove("disblock");
+  }
+  if (event.keyCode == 13 && searchInput.value !== "") {
+    SearchFunc(searchWord);
+  } else {
+    return false;
+  }
+});
 
-        let realmean = meanings
-          .map((ele) => {
-            let { partOfSpeech, definitions, synonyms } = ele;
+//module
 
-            console.log(partOfSpeech);
-
-            let eachdefine = definitions
-              .map((ele) => {
-                if (!ele.example) {
-                  return `<li><span>${ele.definition}</span></li>`;
-                } else {
-                  return `
-              <li><span>${ele.definition}</span></li>
-              <li class="example"><span>"${ele.example}"</span></li>`;
-                }
-                // return ele.example;
-              })
-              .join("");
-            let eachsynonym = synonyms
-              .map((ele) => {
-                return `<span class="symn">${ele}</span>`;
-              })
-              .join("");
-
-            return `<div class="word-div">
-              <div class="word-type">
-                <h3 class="wtype">${partOfSpeech}</h3>
-                <div class="line"></div>
-              </div>
-              <h3 class="meaning">meaning</h3>
-              <div class="meaning-div">
-                <ul class="meaning-ul">
-                ${eachdefine}
-                </ul>
-              </div>
-              <div class="synonyms-div">
-                <h3>synonyms</h3>
-                <div class="synonyms-txt">
-                  ${eachsynonym}
-                </div>
-              </div>
-            </div>`;
-          })
-          .join("");
-
-        content.innerHTML = `        
-          <div class="dict-head">
-            <div class="dict-title">
-              <div class="dict-ttxt">
-                <h1 class="searchword">${word}</h1>
-                <h3 class="special phonetic">${text}</h3>
-              </div>
-              <div class="audio-div">
-                <img
-                  src="./assets/images/icon-play.svg"
-                  alt="play sound"
-                  class="play-sound"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="word-type-div">
-          ${realmean}
-          </div>
-
-
-          <div class="line"></div>
-
-          <div class="source-div">
-            <h3>source</h3>
-            <a href="${sourceUrls[0]}"
-              >${sourceUrls[0]}
-              <img src="./assets/images/icon-new-window.svg" alt=""
-            /></a>
-          </div>`;
-        let playSound = document.querySelector(".play-sound");
-
-        let playAudio = new Audio(audio);
-
-        playSound.addEventListener("click", () => {
-          playAudio.play();
-        });
-      });
-    });
-  });
-} catch (err) {
-  console.log(err);
-}
-
-let symn = document.querySelectorAll(".symn");
-symn.forEach((ele) => {
-  ele.addEventListener("click", async () => {
+async function SearchFunc(element) {
+  try {
     const fetching = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${ele.textContent}`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${element}`
     );
     let data = await fetching.json();
-    console.log(data);
-    console.log(fetching);
     data.map((element) => {
       let { word, phonetics, meanings, sourceUrls } = element;
       /** Iteration starts here */
@@ -544,7 +222,7 @@ symn.forEach((ele) => {
         audio = right.audio;
       } else {
         text = "";
-        audio = "https://api.dictionaryapi.dev/media";
+        audio = "https://api.dictionaryapi.dev/media/";
       }
 
       let realmean = meanings
@@ -622,14 +300,38 @@ symn.forEach((ele) => {
               <img src="./assets/images/icon-new-window.svg" alt=""
             /></a>
           </div>`;
+
       let playSound = document.querySelector(".play-sound");
 
-      searchInput.value = ele.textContent;
-      let playAudio = new Audio(audio);
+      let playAudio = new Audio(audio ? audio : "https");
 
       playSound.addEventListener("click", () => {
         playAudio.play();
       });
+      let symn = document.querySelectorAll(".symn");
+      symn.forEach((ele) => {
+        ele.addEventListener("click", async () => {
+          SearchFunc(ele.textContent);
+          searchInput.value = ele.textContent;
+        });
+      });
     });
-  });
-});
+  } catch (err) {
+    content.innerHTML = `          <div class="error-in">
+            <h1>😕</h1>
+            <h3>no definitions found</h3>
+            <p>
+            Sorry pal, we couldn't find definitions for the word you were
+            looking for. You can try the search again at later time or head to
+            the web instead.
+            </p>
+            </div>
+            `;
+    setTimeout(() => {
+      SearchFunc("hey");
+      searchInput.value = "hey";
+    }, 5000);
+
+    console.log(err);
+  }
+}
